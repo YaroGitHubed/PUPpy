@@ -984,10 +984,17 @@ elif args.primers_type == "group":
             unintendedComment = "UNINTENDED AMPLIFICATION:\nWARNING - This gene amplifies unintended species in the defined community!"
 
         ## Comments about percentage identity of alignments:
-        if pidentSum == 100 * numTargets:
-            PidentComments = "ALIGNMENTS %ID:\nThis gene aligns perfectly (100% ID) to each target gene."
-        elif pidentSum < 100 * numTargets:
-            PidentComments = "ALIGNMENTS %ID:\nThis gene does not align perfectly (100% ID) to at least one target gene."
+        PidentComments = "ALIGNMENTS %ID:\nNo alignment information available."
+
+        if isinstance(pidentSum, (int, float)) and isinstance(numTargets, (int, float)):
+            if pidentSum == 100 * numTargets:
+                PidentComments = (
+                    "ALIGNMENTS %ID:\nThis gene aligns perfectly (100% ID) to each target gene."
+                )
+            elif pidentSum < 100 * numTargets:
+                PidentComments = (
+                    "ALIGNMENTS %ID:\nThis gene does not align perfectly (100% ID) to at least one target gene."
+                )
 
         ## Comments about alignments query coverage:
         if qcovSum == 1 * numTargets:
